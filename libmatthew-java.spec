@@ -2,22 +2,24 @@
 %define gcj_support     1
 
 Name:           libmatthew-java
-Version:        0.3
-Release:        %mkrel 0.0.2
+Version:        0.4
+Release:        %mkrel 0.0.1
 Epoch:          0
-Summary:        Java bindings for D-Bus
+Summary:        Collection of Java libraries
 License:        GPL
 Group:          Development/Java
 URL:            http://www.matthew.ath.cx/projects/java/
-Source0:        http://www.matthew.ath.cx/projects/java/libmatthew-java-0.3.tar.gz
-Requires:       jpackage-utils >= 0:1.6
-BuildRequires:  jpackage-utils >= 0:1.6
+Source0:        http://ftp.debian.org/debian/pool/main/libm/libmatthew-java/libmatthew-java_0.4.orig.tar.gz
+Requires:       jpackage-utils
+BuildRequires:  jpackage-utils
 %if %{gcj_support}
 Requires(post): java-gcj-compat
 Requires(postun): java-gcj-compat
 BuildRequires:  java-gcj-compat-devel
+BuildRequires:  java-1.5.0-gcj-javadoc
 %else
 BuildRequires:  java-devel
+BuildRequires:  java-javadoc
 %endif
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root
 
@@ -64,7 +66,7 @@ Javadoc for %{name}.
 
 %prep
 %setup -q
-%{__mkdir_p} api
+%{__perl} -pi -e 's|http://java.sun.com/j2se/1.4.2/docs/api/|%{_javadocdir}/java|' Makefile
 
 %build
 export CLASSPATH=
@@ -80,9 +82,8 @@ export OPT_JAR_LIST=:
   LDFLAGS="-fPIC -shared" \
   GCJFLAGS="%{optflags} -fjni" \
   JCFLAGS="-nowarn -source 1.5" \
-  JAVA_HOME=%{java_home}
-
-%{javadoc} -d api `%{_bindir}/find . -name '*.java'`
+  JAVADOC="%{javadoc}" \
+  JAVA_HOME=%{java_home} all doc
 
 %install
 %{__rm} -rf %{buildroot}
@@ -101,6 +102,7 @@ export OPT_JAR_LIST=:
   LDFLAGS="-fPIC -shared" \
   GCJFLAGS="%{optflags} -fjni" \
   JCFLAGS="-nowarn -source 1.5" \
+  JAVADOC="%{javadoc}" \
   JAVA_HOME=%{java_home}
 
 (cd %{buildroot}%{_jnidir}/libmatthew-java-%{version} && for jar in *.jar; do %{__mv} ${jar} `/bin/basename ${jar} .jar`-%{version}.jar; done)
@@ -109,7 +111,7 @@ export OPT_JAR_LIST=:
 %{__ln_s} libmatthew-java-%{version} %{buildroot}%{_jnidir}/libmatthew-java
 
 %{__mkdir_p} %{buildroot}%{_javadocdir}/%{name}-%{version}
-%{__cp} -a api/* %{buildroot}%{_javadocdir}/%{name}-%{version}
+%{__cp} -a doc/* %{buildroot}%{_javadocdir}/%{name}-%{version}
 %{__ln_s} %{name}-%{version} %{buildroot}%{_javadocdir}/%{name}
 
 %if %{gcj_support}
