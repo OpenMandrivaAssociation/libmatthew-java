@@ -2,14 +2,15 @@
 %define gcj_support     1
 
 Name:           libmatthew-java
-Version:        0.4
-Release:        %mkrel 0.0.2
+Version:        0.5
+Release:        %mkrel 0.0.1
 Epoch:          0
 Summary:        Collection of Java libraries
 License:        GPL
 Group:          Development/Java
 URL:            http://www.matthew.ath.cx/projects/java/
-Source0:        http://ftp.debian.org/debian/pool/main/libm/libmatthew-java/libmatthew-java_0.4.orig.tar.gz
+Source0:        http://ftp.debian.org/debian/pool/main/libm/libmatthew-java/libmatthew-java_%{version}.orig.tar.gz
+Patch0:         libmatthew-java-0.5-no-classpath-in-manifest.patch
 Requires:       jpackage-utils
 BuildRequires:  jpackage-utils
 %if %{gcj_support}
@@ -64,6 +65,8 @@ Javadoc for %{name}.
 
 %prep
 %setup -q
+%patch0 -p1
+/bin/touch Manifest
 %{__perl} -pi -e 's|http://java.sun.com/j2se/1.4.2/docs/api/|%{_javadocdir}/java|' Makefile
 
 %build
@@ -103,8 +106,8 @@ export OPT_JAR_LIST=:
   JAVADOC="%{javadoc}" \
   JAVA_HOME=%{java_home}
 
-(cd %{buildroot}%{_jnidir}/libmatthew-java-%{version} && for jar in *.jar; do %{__mv} ${jar} `/bin/basename ${jar} .jar`-%{version}.jar; done)
-(cd %{buildroot}%{_jnidir}/libmatthew-java-%{version} && for jar in *-%{version}*; do %{__ln_s} ${jar} ${jar/-%{version}/}; done)
+#(cd %{buildroot}%{_jnidir}/libmatthew-java-%{version} && for jar in *.jar; do %{__mv} ${jar} `/bin/basename ${jar} .jar`-%{version}.jar; done)
+#(cd %{buildroot}%{_jnidir}/libmatthew-java-%{version} && for jar in *-%{version}*; do %{__ln_s} ${jar} ${jar/-%{version}/}; done)
 
 %{__ln_s} libmatthew-java-%{version} %{buildroot}%{_jnidir}/libmatthew-java
 
