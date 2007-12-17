@@ -20,7 +20,6 @@ BuildRequires:  java-1.5.0-gcj-javadoc
 BuildRequires:  java-devel
 BuildRequires:  java-javadoc
 %endif
-BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root
 
 %description
 A collection of Java libraries, including:
