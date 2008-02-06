@@ -3,7 +3,7 @@
 
 Name:           libmatthew-java
 Version:        0.6
-Release:        %mkrel 0.0.1
+Release:        %mkrel 0.0.2
 Epoch:          0
 Summary:        Collection of Java libraries
 License:        GPL
@@ -15,11 +15,10 @@ Requires:       jpackage-utils
 BuildRequires:  java-rpmbuild
 %if %{gcj_support}
 BuildRequires:  java-gcj-compat-devel
-BuildRequires:  java-1.5.0-gcj-javadoc
 %else
 BuildRequires:  java-devel
-BuildRequires:  java-javadoc
 %endif
+BuildRequires:  java-javadoc
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root
 
 %description
