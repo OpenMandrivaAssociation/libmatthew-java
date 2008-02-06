@@ -2,14 +2,14 @@
 %define gcj_support     1
 
 Name:           libmatthew-java
-Version:        0.5
-Release:        %mkrel 0.0.2
+Version:        0.6
+Release:        %mkrel 0.0.1
 Epoch:          0
 Summary:        Collection of Java libraries
 License:        GPL
 Group:          Development/Java
 URL:            http://www.matthew.ath.cx/projects/java/
-Source0:        http://ftp.debian.org/debian/pool/main/libm/libmatthew-java/libmatthew-java_%{version}.orig.tar.gz
+Source0:        http://ftp.debian.org/debian/pool/main/libm/libmatthew-java/libmatthew-java-%{version}.tar.gz
 Patch0:         libmatthew-java-0.5-no-classpath-in-manifest.patch
 Requires:       jpackage-utils
 BuildRequires:  java-rpmbuild
@@ -69,7 +69,7 @@ export OPT_JAR_LIST=:
   GCJ=%{gcj} \
   CC=%{__cc} \
   LD=%{__ld} \
-  CFLAGS="-fPIC %{optflags}" \
+  CFLAGS="-fPIC %{optflags} -std=c99" \
   LDFLAGS="-fPIC -shared" \
   GCJFLAGS="%{optflags} -fjni" \
   JCFLAGS="-nowarn -source 1.5" \
