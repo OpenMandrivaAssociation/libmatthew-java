@@ -2,15 +2,15 @@
 %define gcj_support     1
 
 Name:           libmatthew-java
-Version:        0.6
-Release:        %mkrel 0.0.2
+Version:        0.7
+Release:        %mkrel 0.0.1
 Epoch:          0
 Summary:        Collection of Java libraries
 License:        GPL
 Group:          Development/Java
 URL:            http://www.matthew.ath.cx/projects/java/
-Source0:        http://ftp.debian.org/debian/pool/main/libm/libmatthew-java/libmatthew-java-%{version}.tar.gz
-Patch0:         libmatthew-java-0.5-no-classpath-in-manifest.patch
+Source0:        http://www.matthew.ath.cx/projects/java/%{name}-%{version}.tar.gz
+Patch0:         libmatthew-java-0.7-no-classpath-in-manifest.patch
 Requires:       jpackage-utils
 BuildRequires:  java-rpmbuild
 %if %{gcj_support}
@@ -105,9 +105,7 @@ export OPT_JAR_LIST=:
 %{__cp} -a doc/* %{buildroot}%{_javadocdir}/%{name}-%{version}
 %{__ln_s} %{name}-%{version} %{buildroot}%{_javadocdir}/%{name}
 
-%if %{gcj_support}
-%{_bindir}/aot-compile-rpm
-%endif
+%{gcj_compile}
 
 %clean
 %{__rm} -rf %{buildroot}
@@ -125,10 +123,8 @@ export OPT_JAR_LIST=:
 %doc COPYING INSTALL README
 %{_jnidir}/libmatthew-java*
 %{_libdir}/*.so
-%if %{gcj_support}
-%dir %{_libdir}/gcj/%{name}
-%attr(-,root,root) %{_libdir}/gcj/%{name}/*
-%endif
+%{gcj_files}
+
 
 %files javadoc
 %defattr(0644,root,root,0755)
