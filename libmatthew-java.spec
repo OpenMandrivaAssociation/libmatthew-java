@@ -2,14 +2,17 @@
 %define gcj_support     1
 
 Name:           libmatthew-java
-Version:        0.7
+Version:        0.7.1
 Release:        %mkrel 0.0.1
 Epoch:          0
 Summary:        Collection of Java libraries
 License:        GPL
 Group:          Development/Java
-URL:            http://www.matthew.ath.cx/projects/java/
-Source0:        http://www.matthew.ath.cx/projects/java/%{name}-%{version}.tar.gz
+#URL:            http://www.matthew.ath.cx/projects/java/
+#Source0:        http://www.matthew.ath.cx/projects/java/%{name}-%{version}.tar.gz
+# XXX: somehow the Debian version is always newer than upstream
+URL:            http://packages.debian.org/source/sid/libmatthew-java
+Source0:        http://ftp.de.debian.org/debian/pool/main/libm/libmatthew-java/libmatthew-java_%{version}.orig.tar.gz
 Patch0:         libmatthew-java-0.7-no-classpath-in-manifest.patch
 Requires:       jpackage-utils
 BuildRequires:  java-rpmbuild
@@ -96,8 +99,10 @@ export OPT_JAR_LIST=:
   JAVADOC="%{javadoc}" \
   JAVA_HOME=%{java_home}
 
-#(cd %{buildroot}%{_jnidir}/libmatthew-java-%{version} && for jar in *.jar; do %{__mv} ${jar} `/bin/basename ${jar} .jar`-%{version}.jar; done)
-#(cd %{buildroot}%{_jnidir}/libmatthew-java-%{version} && for jar in *-%{version}*; do %{__ln_s} ${jar} ${jar/-%{version}/}; done)
+%if 0
+(cd %{buildroot}%{_jnidir}/libmatthew-java-%{version} && for jar in *.jar; do %{__mv} ${jar} `/bin/basename ${jar} .jar`-%{version}.jar; done)
+(cd %{buildroot}%{_jnidir}/libmatthew-java-%{version} && for jar in *-%{version}*; do %{__ln_s} ${jar} ${jar/-%{version}/}; done)
+%endif
 
 %{__ln_s} libmatthew-java-%{version} %{buildroot}%{_jnidir}/libmatthew-java
 
