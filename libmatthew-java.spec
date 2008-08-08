@@ -3,7 +3,7 @@
 
 Name:           libmatthew-java
 Version:        0.7.1
-Release:        %mkrel 0.0.1
+Release:        %mkrel 2.0.1
 Epoch:          0
 Summary:        Collection of Java libraries
 License:        GPL
