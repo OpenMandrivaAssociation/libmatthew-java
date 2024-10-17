@@ -11,7 +11,7 @@ Group:          Development/Java
 #URL:            http://www.matthew.ath.cx/projects/java/
 #Source0:        http://www.matthew.ath.cx/projects/java/%{name}-%{version}.tar.gz
 # XXX: somehow the Debian version is always newer than upstream
-URL:            http://packages.debian.org/source/sid/libmatthew-java
+URL:            https://packages.debian.org/source/sid/libmatthew-java
 Source0:        http://ftp.de.debian.org/debian/pool/main/libm/libmatthew-java/libmatthew-java_%{version}.orig.tar.gz
 Patch0:         libmatthew-java-0.7-no-classpath-in-manifest.patch
 Requires:       jpackage-utils
